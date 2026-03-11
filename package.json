@@ -1,0 +1,49 @@
+{
+  "name": "mcp-server-wp",
+  "version": "1.0.0",
+  "description": "Local MCP server that bridges AI agents (Claude, Gemini) to WordPress via the MCP Bridge plugin",
+  "keywords": ["mcp", "wordpress", "ai", "claude", "model-context-protocol", "headless-wordpress"],
+  "author": "Georg Simic",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-server-wp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/georgsimic/mcp-server-wp.git"
+  },
+  "mcpServers": {
+    "wordpress": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-wp"]
+    }
+  }
+}

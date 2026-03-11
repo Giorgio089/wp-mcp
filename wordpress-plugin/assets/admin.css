@@ -1,0 +1,59 @@
+/* MCP Bridge Admin Styles */
+
+.mcp-bridge-settings h1 {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.mcp-bridge-logo { font-size: 1.4em; }
+.mcp-bridge-version {
+	font-size: 12px;
+	background: #2271b1;
+	color: #fff;
+	padding: 2px 8px;
+	border-radius: 10px;
+	font-weight: 400;
+	align-self: center;
+}
+.mcp-bridge-endpoint-notice {
+	background: #f0f6fc;
+	border-left: 4px solid #2271b1;
+	padding: 12px 16px;
+	margin: 12px 0 20px;
+	border-radius: 0 4px 4px 0;
+}
+.mcp-bridge-endpoint-notice code {
+	user-select: all;
+	background: transparent;
+	font-size: 13px;
+}
+.mcp-bridge-card {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 20px 24px;
+	margin-bottom: 20px;
+}
+.mcp-bridge-card h2 {
+	margin-top: 0;
+	padding-top: 0;
+	border-bottom: 1px solid #f0f0f1;
+	padding-bottom: 10px;
+	margin-bottom: 16px;
+}
+.mcp-bridge-tool-toggle {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 10px 0;
+	border-bottom: 1px solid #f6f7f7;
+	cursor: pointer;
+}
+.mcp-bridge-tool-toggle:last-child { border-bottom: none; }
+.mcp-bridge-tool-toggle input { margin-top: 3px; }
+.mcp-bridge-tool-toggle .tool-name { min-width: 180px; }
+.mcp-bridge-tool-toggle .tool-desc { color: #646970; font-size: 13px; }
+.mcp-bridge-tool-toggle.is-danger .tool-name code { color: #b32d2e; }
+.mcp-bridge-log-table { margin-top: 10px; }
+.mcp-bridge-status-ok { color: #00a32a; font-weight: 600; }
+.mcp-bridge-status-error { color: #b32d2e; font-weight: 600; }
