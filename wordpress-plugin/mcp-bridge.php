@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name:       MCP Bridge for WordPress
- * Plugin URI:        https://github.com/georgsimic/mcp-server-wp
- * Description:       Connect your WordPress site to local AI agents (Claude, Gemini) via the Model Context Protocol. Enables headless WP management through natural language.
+ * Plugin URI:        https://leanplugins.dev/wp-mcp-bridge
+ * Description:       Connect your WordPress site to local AI agents (like Claude, Codex etc.) via the Model Context Protocol. Enables headless WP management through natural language.
  * Version:           1.0.0
  * Requires at least: 6.0
  * Requires PHP:      8.0
- * Author:            Georg Simic
+ * Author:            LeanPlugins
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       mcp-bridge
@@ -34,13 +34,35 @@ spl_autoload_register( function ( string $class ) {
 		return;
 	}
 
+	// Split relative class into namespace parts and class name.
+	// e.g. "Tools\WP_Site_Health" → subdir "tools", filename "class-wp-site-health.php"
 	$relative_class = substr( $class, $len );
-	$file           = $base_dir . 'class-' . strtolower( str_replace( [ '\\', '_' ], [ '/', '-' ], $relative_class ) ) . '.php';
+	$parts          = explode( '\\', $relative_class );
+	$class_name     = array_pop( $parts );
+	$subdir         = $parts ? strtolower( implode( '/', $parts ) ) . '/' : '';
+	$file           = $base_dir . $subdir . 'class-' . strtolower( str_replace( '_', '-', $class_name ) ) . '.php';
 
 	if ( file_exists( $file ) ) {
 		require $file;
 	}
 } );
+
+/**
+ * Sanitize callback for the mcp_bridge_enabled_tools option.
+ * Ensures only known tool names are stored.
+ *
+ * @param mixed $value Raw submitted value (array of tool slugs from checkboxes).
+ * @return array Filtered array containing only valid tool names.
+ */
+function mcp_bridge_sanitize_tools( mixed $value ): array {
+	$allowed = [ 'wp_site_health', 'wp_query_db', 'wp_manage_plugins', 'wp_run_cli', 'wp_file_system' ];
+
+	if ( ! is_array( $value ) ) {
+		return [];
+	}
+
+	return array_values( array_intersect( array_map( 'sanitize_text_field', $value ), $allowed ) );
+}
 
 /**
  * Initialize the plugin.

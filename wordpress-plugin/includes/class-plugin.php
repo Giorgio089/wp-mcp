@@ -14,11 +14,27 @@ class Plugin {
 	public function init(): void {
 		$this->load_textdomain();
 		$this->register_rest_routes();
+		$this->register_rest_settings();
 
 		if ( is_admin() ) {
 			$settings = new Settings();
 			$settings->init();
 		}
+	}
+
+	private function register_rest_settings(): void {
+		add_action( 'rest_api_init', function () {
+			register_setting( 'mcp_bridge_rest', 'mcp_bridge_enabled_tools', [
+				'type'              => 'array',
+				'sanitize_callback' => 'mcp_bridge_sanitize_tools',
+				'show_in_rest'      => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [ 'type' => 'string' ],
+					],
+				],
+			] );
+		} );
 	}
 
 	private function load_textdomain(): void {
